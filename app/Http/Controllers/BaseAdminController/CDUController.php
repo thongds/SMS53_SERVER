@@ -6,12 +6,13 @@
  * Time: 4:13 PM
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\BaseAdminController;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Helper\ActionKey;
 use App\Http\Controllers\Helper\MessageKey;
+use App\Http\Controllers\BaseAdminController\Controller;
 use Validator;
 
 
@@ -39,15 +40,16 @@ class CDUController extends Controller {
     public function processPost(Request $request,Array $processData,$callback){
         $this->checkValidate($request);
         // check field unique
-        foreach ($this->mUniqueFields as $uniqueFieldName){
-            $nameRepose = $this->mainModel->where($uniqueFieldName,$request->get($uniqueFieldName))->get()->toArray();
-            if(!empty($nameRepose)){
-                $this->isHaveUniqueError = true;
-                array_push($this->message,$uniqueFieldName." ".MessageKey::wasExist);
-            }
-        }
+
         //create new
         if ($this->isHaveUniqueError) {
+            foreach ($this->mUniqueFields as $uniqueFieldName){
+                $nameRepose = $this->mainModel->where($uniqueFieldName,$request->get($uniqueFieldName))->get()->toArray();
+                if(!empty($nameRepose)){
+                    $this->isHaveUniqueError = true;
+                    array_push($this->message,$uniqueFieldName." ".MessageKey::wasExist);
+                }
+            }
             $callback(true,$this->message);
             return;
         }

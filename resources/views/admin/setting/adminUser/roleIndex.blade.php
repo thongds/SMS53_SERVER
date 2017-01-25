@@ -1,5 +1,5 @@
 @extends('../layouts.admin')
-@section('title','Category Index')
+@section('title','Create Role')
 @section('content')
     <div class="row">
         <!-- left column -->
@@ -16,16 +16,17 @@
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
+                                <th>Role Type</th>
                                 <th>Name</th>
                                 <th>Status</th>
                                 <th>Action</th>
                                 <th>Created</th>
                             </tr>
                             <?php
-                            if($category_list){
+                            if($listData){
                                 $labeClass = "label-success";
                                 $labeName = "Active";
-                                foreach ($category_list as $list){
+                                foreach ($listData as $list){
 
                                     $delete_url = url()->current().'?page='.$page.'&delete=true&id='.$list['id'];
                                     $edit_url = url()->current().'?page='.$page.'&isEdit=true&id='.$list['id'];;
@@ -41,6 +42,7 @@
                                     }
                                     echo '<tr class="'.$class.'">';
                                     echo '<td>'.$list['id'].'</td>';
+                                    echo '<td>'.$list['role_type'].'</td>';
                                     echo '<td class="col-md-4">'.$list['name'].'</td>';
                                     $labeClass = $list['active']?"label-success" : "label-danger";
                                     $labeName = $list['active']?"Active" : "Block";
@@ -64,18 +66,17 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-                {{$category_list->links()}}
+
+                {{$listData->links()}}
             </div>
         </div>
-
-
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
 
                 <!-- /.box-header -->
                 <!-- form start -->
-                <?php echo Form::open(array('route'=>'post_category','method'=>'post','enctype'=>'multipart/form-data')) ?>
+                <?php echo Form::open(array('route'=>$router['POST'],'method'=>'post','enctype'=>'multipart/form-data')) ?>
                 {{--<form role="form">--}}
                 <div class="box-header with-border">
                     <h3 class="box-title">New Category</h3>
@@ -84,9 +85,9 @@
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     @if(strpos($error,'Successful!'))
-                                    <li style="color: #FFFFFF">{{ $error }}</li>
+                                        <li style="color: #FFFFFF">{{ $error }}</li>
                                     @else
-                                    <li style="color: red">{{ $error }}</li>
+                                        <li style="color: red">{{ $error }}</li>
                                     @endif
                                 @endforeach
                             </ul>
@@ -102,11 +103,17 @@
                         @else
                             <input type="input" name ="name" value = "<?php echo $update_data["name"]; ?>" class="form-control" id="exampleInputEmail1" >
                         @endif
+                        <label for="exampleInputEmail1">Role Type</label>
+                        @if(!$isEdit)
+                            <input type="input" name ="role_type" class="form-control" id="exampleInputEmail1" placeholder="Enter Role Type">
+                        @else
+                            <input type="input" name ="role_type" value = "<?php echo $update_data["role_type"]; ?>" class="form-control" id="exampleInputEmail1" >
+                        @endif
                     </div>
                     <div class="checkbox">
                         <label>
                             @if($update_data!=null & $update_data['active'] != 1)
-                                    <input type="checkbox" name="active" > Active
+                                <input type="checkbox" name="active" > Active
                             @else
                                 <input type="checkbox" name="active" checked > Active
                             @endif
@@ -121,7 +128,7 @@
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     @if($isEdit)
-                        &nbsp;&nbsp;&nbsp<a href="<?php echo url()->current() ?>" class="btn btn-warning" >Cancel</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp<a href="<?php echo url()->current() ?>" class="btn btn-warning" >Cancel</a>
                     @endif
                 </div>
                 <?php echo Form::close() ?>

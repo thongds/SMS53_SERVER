@@ -8,7 +8,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\AdminRole;

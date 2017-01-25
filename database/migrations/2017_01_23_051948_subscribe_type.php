@@ -17,7 +17,7 @@ class SubscribeType extends Migration
             $this->generateTable($table);
             $table->string('name');
             $table->string('description');
-            $table->timestamp('total_time');
+            $table->bigInteger('total_time');
         });
     }
 

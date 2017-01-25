@@ -3,24 +3,26 @@
  * Created by PhpStorm.
  * User: ssd
  * Date: 1/25/17
- * Time: 10:41 AM
+ * Time: 12:17 PM
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Setting;
 
 
-use App\Http\Controllers\CDUController;
+use App\Http\Controllers\BaseAdminController\CDUController;
+use App\Models\ProviderPayment;
 use Illuminate\Http\Request;
-use App\Models\Language;
 
-class LanguageController extends CDUController{
-    private $routers = array('GET' => 'get_language','POST' => 'post_language');
+class ProviderPaymentController extends CDUController
+{
+    private $routers = array('GET' => 'get_provider_payment','POST' => 'post_provider_payment');
     private $uniqueFields = array('name');
     private $privateKey = 'id';
     private $validateForm = ['name'=>'required|max:255'];
     private $pagingNumber = 3;
+    private $pageTitle = 'Subtitle Type';
     public function __construct(){
-        parent::__construct(new Language(),$this->privateKey,$this->uniqueFields,$this->routers,$this->validateForm);
+        parent::__construct(new ProviderPayment(),$this->privateKey,$this->uniqueFields,$this->routers,$this->validateForm);
     }
 
     public function index(Request $request){
@@ -44,6 +46,8 @@ class LanguageController extends CDUController{
         }
 
         $listData = $this->mainModel->orderBy('created_at')->paginate($this->pagingNumber);
-        return view('admin/setting/language.languageIndex',['listData'=>$listData,'page'=>$page,'isEdit'=>$request->get('isEdit'),'update_data' =>$this->mUpdateData]);
+        return view('admin/setting/subtitletype.subtitleTypeIndex',['router' =>$this->routers,'pageTitle' => $this->pageTitle,
+            'listData'=>$listData,'page'=>$page,'isEdit'=>$request->get('isEdit'),'update_data' =>$this->mUpdateData]);
     }
+
 }

@@ -120,7 +120,7 @@
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     @if($isEdit)
-                        &nbsp;&nbsp;&nbsp;&nbsp<a href="{{url('/admin/category')}}" class="btn btn-warning" >Cancel</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp<a href="<?php echo url()->current() ?>" class="btn btn-warning" >Cancel</a>
                     @endif
                 </div>
                 <?php echo Form::close() ?>

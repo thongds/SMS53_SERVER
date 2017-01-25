@@ -17,15 +17,16 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Total Time</th>
+                                <th>Description</th>
                                 <th>Status</th>
                                 <th>Action</th>
-                                <th>Created</th>
                             </tr>
                             <?php
-                            if($category_list){
+                            if($listData){
                                 $labeClass = "label-success";
                                 $labeName = "Active";
-                                foreach ($category_list as $list){
+                                foreach ($listData as $list){
 
                                     $delete_url = url()->current().'?page='.$page.'&delete=true&id='.$list['id'];
                                     $edit_url = url()->current().'?page='.$page.'&isEdit=true&id='.$list['id'];;
@@ -37,11 +38,13 @@
                                     }else{
                                         $class = "";
                                         $active_url =url()->current().'?page='.$page.'&active=0&id='.$list['id'];
-                                        $status_button = '<a href='.$active_url.'  class=" col-sm-3 btn btn-sm btn-warning btn-flat pull-left">Deactive</a>';
+                                            $status_button = '<a href='.$active_url.'  class=" col-sm-4 btn btn-sm btn-warning btn-flat pull-left">Deactive</a>';
                                     }
                                     echo '<tr class="'.$class.'">';
                                     echo '<td>'.$list['id'].'</td>';
-                                    echo '<td class="col-md-4">'.$list['name'].'</td>';
+                                    echo '<td class="col-md-2">'.$list['name'].'</td>';
+                                    echo '<td class="col-md-2">'.$list['total_time'].'</td>';
+                                    echo '<td class="col-md-4">'.$list['description'].'</td>';
                                     $labeClass = $list['active']?"label-success" : "label-danger";
                                     $labeName = $list['active']?"Active" : "Block";
 
@@ -51,7 +54,7 @@
                                           '.$status_button.'
                                           <a href= "'.$delete_url.'" class="col-sm-3 btn btn-sm btn-danger btn-flat pull-left">Delete</a>
                                           </td>';
-                                    echo '<td>'.$list['created_at'].'</td>';
+                                    //echo '<td>'.$list['created_at'].'</td>';
                                     echo '<tr>';
 
                                 }
@@ -64,18 +67,17 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-                {{$category_list->links()}}
+
+                {{$listData->links()}}
             </div>
         </div>
-
-
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
 
                 <!-- /.box-header -->
                 <!-- form start -->
-                <?php echo Form::open(array('route'=>'post_category','method'=>'post','enctype'=>'multipart/form-data')) ?>
+                <?php echo Form::open(array('route'=>$router['POST'],'method'=>'post','enctype'=>'multipart/form-data')) ?>
                 {{--<form role="form">--}}
                 <div class="box-header with-border">
                     <h3 class="box-title">New Category</h3>
@@ -84,9 +86,9 @@
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     @if(strpos($error,'Successful!'))
-                                    <li style="color: #FFFFFF">{{ $error }}</li>
+                                        <li style="color: #FFFFFF">{{ $error }}</li>
                                     @else
-                                    <li style="color: red">{{ $error }}</li>
+                                        <li style="color: red">{{ $error }}</li>
                                     @endif
                                 @endforeach
                             </ul>
@@ -96,17 +98,20 @@
                 <div class="box-body">
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Category Name</label>
-                        @if(!$isEdit)
-                            <input type="input" name ="name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name Category">
-                        @else
-                            <input type="input" name ="name" value = "<?php echo $update_data["name"]; ?>" class="form-control" id="exampleInputEmail1" >
-                        @endif
+
+                        <label for="exampleInputEmail1">Subscribe Name</label>
+                        <input type="input" name ="name" value = "<?php echo $update_data!=null?$update_data["name"]:"" ?>" class="form-control" id="exampleInputEmail1" placeholder ="Subscribe Name" >
+
+                        <label for="exampleInputEmail1">Description</label>
+                        <input type="input" name ="description" value = "<?php echo $update_data!=null?$update_data["description"]:"" ?>" placeholder ="Subscribe Description" class="form-control" id="exampleInputEmail1" >
+
+                        <label for="exampleInputEmail1">Total Time</label>
+                        <input type="input" name ="total_time" value = "<?php echo $update_data!=null?$update_data["total_time"]:"" ?>" placeholder ="Subscribe Total Time" class="form-control" id="exampleInputEmail1" >
                     </div>
                     <div class="checkbox">
                         <label>
                             @if($update_data!=null & $update_data['active'] != 1)
-                                    <input type="checkbox" name="active" > Active
+                                <input type="checkbox" name="active" > Active
                             @else
                                 <input type="checkbox" name="active" checked > Active
                             @endif

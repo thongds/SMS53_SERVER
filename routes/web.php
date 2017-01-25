@@ -30,56 +30,31 @@ Route::group(['namespace' => 'Auth'],function (){
 });
 
 /* news controller group */
+Route::group(['namespace' => 'Admin\Setting'],function (){
+    //setting SubtitleType
+    Route::get('admin/subtitletype','SubtitleTypeController@index')->name('get_subtitle_type');
+    Route::post('admin/subtitletype','SubtitleTypeController@index')->name('post_subtitle_type');
+    //setting language
+    Route::get('admin/language','LanguageController@index')->name('get_language');
+    Route::post('admin/language','LanguageController@index')->name('post_language');
+    //setting category
+    Route::get('admin/category','CategoryController@index')->name('get_category');
+    Route::post('admin/category','CategoryController@index')->name('post_category');
+    //setting ProviderPayment
+    Route::get('admin/provider-payment','ProviderPaymentController@index')->name('get_provider_payment');
+    Route::post('admin/provider-payment','ProviderPaymentController@index')->name('post_provider_payment');
+    //setting role
+    Route::get('admin/role','RoleController@index')->name('get_role');
+    Route::post('admin/role','RoleController@index')->name('post_role');
+    //setting subscribe type
+    Route::get('admin/subscribe-type','SubscribeType@index')->name('get_subscribe_type');
+    Route::post('admin/subscribe-type','SubscribeType@index')->name('post_subscribe_type');
 
+});
 Route::group(['namespace' => 'Admin'],function (){
 
     Route::get('admin/testadmin', 'TestAdminController@index');
     /* admin route */
-    //setting role
-    Route::get('admin/createRole','SettingController@createRole')->name('get_createRole');
-    Route::post('admin/createRole','SettingController@createRole')->name('createRole');
-    //setting category
-    Route::get('admin/category','CategoryController@index')->name('get_category');
-    Route::post('admin/category','CategoryController@index')->name('post_category');
-    //setting language
-    Route::get('admin/language','LanguageController@index')->name('get_language');
-    Route::post('admin/language','LanguageController@index')->name('post_language');
-
-    Route::get('admin','AdminController@index');
-    Route::post('admin/login','AdminController@login')->name('admin');
-    Route::get('admin/login','AdminController@login')->name('admin');
-
-    Route::get('admin/newssetting','AdminNewsController@index');
-    Route::get('admin/listnews','AdminNewsController@listNewsmedia');
-
-    Route::get('admin/addnews','AdminNewsController@addNewspaper');
-    Route::post('admin/addnews','AdminNewsController@addNewspaper')->name('addNewspaper');
-
-
-    Route::get('admin/addnewcategory','AdminNewsController@addNewCategory');
-    Route::post('admin/addnewcategory','AdminNewsController@addNewCategory')->name('addNewCategory');
-
-
-    Route::get('admin/addnewsmedia','AdminNewsController@addNewsMedia');
-    Route::post('admin/addnewsmedia','AdminNewsController@addNewsMedia')->name('addNewsMedia');
-
-    /* social media controller */
-
-
-    Route::get('admin/socialmedia','AdminSocialMediaController@index')->name('list_social');
-    Route::get('admin/listsocial','AdminController@listsocial');
-    Route::get('admin/addsocial','AdminController@addsocial');
-    Route::get('admin/socialsetting','AdminController@socialsetting');
-
-    Route::get('admin/addnewsocial','AdminController@addnewsocial');
-    Route::post('admin/addnewsocial','AdminController@addnewsocial')->name('addnewsocial');
-
-
-    Route::get('admin/addnewfanpage','AdminController@addnewfanpage');
-    Route::post('admin/addnewfanpage','AdminController@addnewfanpage')->name('addnewfanpage');
-
-    Route::get('admin/addnewsocialmedia','AdminSocialMediaController@addNewSocialMedia');
-    Route::post('admin/addnewsocialmedia','AdminSocialMediaController@addNewSocialMedia')->name('addNewSocialMedia');
 
 });
 

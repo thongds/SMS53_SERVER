@@ -5,9 +5,9 @@
  * Date: 1/21/17
  * Time: 2:10 PM
  */
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Setting;
 
-use App\Http\Controllers\CDUController;
+use App\Http\Controllers\BaseAdminController\CDUController;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
